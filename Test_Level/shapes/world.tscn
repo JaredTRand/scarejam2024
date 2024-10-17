@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr5dgsbhtlxuo"]
+
+[ext_resource type="PackedScene" uid="uid://c74obu4lmvtdc" path="res://Test_Level/shapes/box.tscn" id="1_hd7gf"]
+
+[node name="World" type="Node3D"]
+
+[node name="box2" parent="." instance=ExtResource("1_hd7gf")]
+transform = Transform3D(52.7326, 0, 0, 0, 0.0969593, 0, 0, 0, 52.7326, 0, 0, 0)
+
+[node name="box" parent="." instance=ExtResource("1_hd7gf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.91827, 0.54848, 14.3594)
+
+[node name="box3" parent="." instance=ExtResource("1_hd7gf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8002, 0.54848, -9.2456)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.221446, 0.412897, -0.883447, 0, 0.905939, 0.423409, 0.975173, 0.0937624, -0.200617, 0, 9, 0)

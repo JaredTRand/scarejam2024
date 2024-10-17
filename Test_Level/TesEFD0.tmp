@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3piy113g7lq5"]
+
+[ext_resource type="PackedScene" uid="uid://c74obu4lmvtdc" path="res://Test_Level/shapes/box.tscn" id="1_tqepx"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_ay8cq"]
+[ext_resource type="Material" uid="uid://baf2eax034bsm" path="res://Test_Level/shapes/TestLevel_material.tres" id="2_kvhqi"]
+[ext_resource type="PackedScene" uid="uid://n0m0p6xa1v01" path="res://weapons/scenes/handcrossbow/spawnable/spawnable_handcrossbow.tscn" id="3_k0d3y"]
+[ext_resource type="PackedScene" uid="uid://cafve2vpd74pi" path="res://weapons/scenes/test_enemy.tscn" id="4_ylpa8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nfxkp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xqp5p"]
+material = ExtResource("2_kvhqi")
+
+[node name="World" type="Node3D"]
+
+[node name="meshes" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="meshes"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="meshes/StaticBody3D"]
+transform = Transform3D(61.3396, 0, 0, 0, 3.27789, 0, 0, 0, 61.3396, 0, -1.63953, 0)
+shape = SubResource("BoxShape3D_nfxkp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="meshes/StaticBody3D"]
+transform = Transform3D(30.5232, 0, 0, 0, 30.5232, 0, 0, 0, 30.5232, 0, 0, 0)
+mesh = SubResource("PlaneMesh_xqp5p")
+
+[node name="box" parent="meshes" instance=ExtResource("1_tqepx")]
+transform = Transform3D(5.66072, 0, 0, 0, 5.66072, 0, 0, 0, 5.66072, -20.963, 0.172298, -15.4106)
+
+[node name="box6" parent="meshes" instance=ExtResource("1_tqepx")]
+transform = Transform3D(5.66072, 0, 0, 0, 1.90746, 0, 0, 0, 1.25345, -1.28674, -0.287541, 3.2991)
+
+[node name="box4" parent="meshes" instance=ExtResource("1_tqepx")]
+transform = Transform3D(5.04019, 0, 2.57687, 0, 5.66072, 0, -2.57687, 0, 5.04019, 30.0898, 8.51105, 30.2315)
+
+[node name="box5" parent="meshes" instance=ExtResource("1_tqepx")]
+transform = Transform3D(37.651, 0, -0.119409, 0, 1.71322, 0, 0.922142, 0, 4.87548, -0.849813, 7.07725, 30.2315)
+
+[node name="box3" parent="meshes" instance=ExtResource("1_tqepx")]
+transform = Transform3D(5.06928, 14.4307, 0.608311, 0, 18.7215, -2.36756, -2.51917, 29.0385, 1.22409, 16.1956, 4.99771, 5.99644)
+
+[node name="box2" parent="meshes" groups=["stickable"] instance=ExtResource("1_tqepx")]
+transform = Transform3D(5.31762, -2.48901, 0.698769, 0, 4.55837, 3.24583, -1.94082, -6.81961, 1.91455, -19.2487, 0.172297, -2.18458)
+
+[node name="weapons" type="Node3D" parent="."]
+
+[node name="spawnable_handcrossbow" parent="weapons" instance=ExtResource("3_k0d3y")]
+transform = Transform3D(0.172737, 0, 0.984968, 0, 1, 0, -0.984968, 0, 0.172737, 0, 1.11101, 3.22922)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.624766, 0.780812, 0, -0.780812, 0.624766, 0, 4.91675, 0)
+light_energy = 3.0
+
+[node name="Character" parent="." instance=ExtResource("2_ay8cq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.201606, 0.281114, 0.660655)
+base_speed = 5.0
+sprint_speed = 8.0
+JUMP = "character_jump"
+LEFT = "character_left"
+RIGHT = "character_right"
+FORWARD = "character_forward"
+BACKWARD = "character_backward"
+sprint_mode = 1
+reticle_enabled = false
+HEAD = Object(Node3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":null)
+
+CAMERA = Object(Camera3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 0.999391, -0.0348995, 0, 0.0348995, 0.999391, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"keep_aspect":1,"cull_mask":1048575,"environment":null,"attributes":null,"h_offset":0.0,"v_offset":0.0,"doppler_tracking":0,"projection":0,"current":false,"fov":75.0,"size":1.0,"frustum_offset":Vector2(0, 0),"near":0.05,"far":4000.0,"script":null)
+
+HEADBOB_ANIMATION = Object(AnimationPlayer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","active":true,"deterministic":false,"reset_on_save":true,"root_node":NodePath(".."),"root_motion_track":NodePath(""),"audio_max_polyphony":32,"callback_mode_process":1,"callback_mode_method":0,"libraries":{
+"": null
+},"autoplay":"","playback_default_blend_time":0.0,"speed_scale":1.0,"movie_quit_on_finish":false,"blend_times":[&"RESET", &"RESET", 0.5, &"RESET", &"walk", 0.5, &"walk", &"RESET", 0.5],"script":null)
+
+JUMP_ANIMATION = Object(AnimationPlayer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","active":true,"deterministic":false,"reset_on_save":true,"root_node":NodePath(".."),"root_motion_track":NodePath(""),"audio_max_polyphony":32,"callback_mode_process":1,"callback_mode_method":0,"libraries":{
+"": null
+},"autoplay":"","playback_default_blend_time":0.0,"speed_scale":4.0,"movie_quit_on_finish":false,"blend_times":[],"script":null)
+
+CROUCH_ANIMATION = Object(AnimationPlayer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","active":true,"deterministic":false,"reset_on_save":true,"root_node":NodePath(".."),"root_motion_track":NodePath(""),"audio_max_polyphony":32,"callback_mode_process":1,"callback_mode_method":0,"libraries":{
+"": null
+},"autoplay":"","playback_default_blend_time":0.0,"speed_scale":1.0,"movie_quit_on_finish":false,"blend_times":[],"script":null)
+
+COLLISION_MESH = Object(CollisionShape3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"shape":null,"disabled":false,"script":null)
+
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("4_ylpa8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="CharacterBody3D2" parent="." instance=ExtResource("4_ylpa8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.63381, 0, -14)
+
+[node name="CharacterBody3D3" parent="." instance=ExtResource("4_ylpa8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.49351, 0, -14)
+
+[node name="CharacterBody3D4" parent="." instance=ExtResource("4_ylpa8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.20196, 0, -14)
+
+[node name="CharacterBody3D5" parent="." instance=ExtResource("4_ylpa8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6249, 0, -14)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwxbdou71s4mb"]
+
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_55nbn"]
+[ext_resource type="PackedScene" uid="uid://dr5dgsbhtlxuo" path="res://Test_Level/shapes/world.tscn" id="2_h0j2k"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="World" parent="." instance=ExtResource("2_h0j2k")]
+
+[node name="Character" parent="." instance=ExtResource("2_55nbn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.349356, 0)
+JUMP = "player_jump"
+LEFT = "player_left"
+RIGHT = "player_right"
+FORWARD = "player_forward"
+BACKWARD = "player_backward"
+CROUCH = "player_crouch"
+SPRINT = "player_sprint"
