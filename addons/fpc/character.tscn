@@ -353,7 +353,7 @@ MarginContainer/constants/margin_top = 10
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
 script = ExtResource("1_0t4e8")
-default_reticle = "res://addons/fpc/reticles/reticle_1.tscn"
+default_reticle = "res://addons/fpc/reticles/reticle_2.tscn"
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
@@ -379,6 +379,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
 
+[node name="Interact" type="RayCast3D" parent="Head/Camera"]
+target_position = Vector3(0, 0, -2.5)
+
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
 "": SubResource("AnimationLibrary_o0unb")
@@ -401,7 +404,6 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
-visible = false
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0

@@ -81,7 +81,7 @@ extends CharacterBody3D
 ## Use with caution.
 @export var gravity_enabled : bool = true
 
-
+@onready var interact_ray: RayCast3D =  $Head/Camera/Interact
 # Member variables
 var speed : float = base_speed
 var current_speed : float = 0.0
@@ -109,7 +109,7 @@ func _ready():
 	
 	if default_reticle:
 		change_reticle(default_reticle)
-	
+	change_reticle_visibility(false)
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.
 	HEADBOB_ANIMATION.play("RESET")
@@ -380,7 +380,19 @@ func _process(delta):
 				Input.MOUSE_MODE_VISIBLE:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					#get_tree().paused = false
+					
+	var collider = interact_ray.get_collider()
+	if collider and collider.is_in_group("interactable") and collider.is_interactable:
+		RETICLE.update_text(collider.interact_type + " " + collider.interact_name)
+		change_reticle_visibility(true)
+	else:
+		change_reticle_visibility(false)
 
+func change_reticle_visibility(make_visible):
+	if make_visible:
+		RETICLE.visible = true
+	else:
+		RETICLE.visible = false
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

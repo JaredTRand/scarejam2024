@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c74obu4lmvtdc"]
+[gd_scene load_steps=7 format=3 uid="uid://c74obu4lmvtdc"]
 
 [ext_resource type="Texture2D" uid="uid://6xwovqv3ho3a" path="res://addons/kenney_prototype_textures/dark/texture_02.png" id="1_nh230"]
+[ext_resource type="Script" path="res://Test_Level/shapes/box.gd" id="1_xyp5p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cjy8o"]
 albedo_texture = ExtResource("1_nh230")
@@ -18,6 +19,9 @@ material = SubResource("StandardMaterial3D_gyxhy")
 
 [node name="box" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_xyp5p")
+interact_name = "TOUCH"
+interact_type = "BOX"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_cjy8o")
