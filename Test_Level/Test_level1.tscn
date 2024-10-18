@@ -1,18 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwxbdou71s4mb"]
+[gd_scene load_steps=6 format=3 uid="uid://cwxbdou71s4mb"]
 
+[ext_resource type="Script" path="res://Test_Level/test_level_1.gd" id="1_dsfdl"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_55nbn"]
 [ext_resource type="PackedScene" uid="uid://dr5dgsbhtlxuo" path="res://Test_Level/shapes/world.tscn" id="2_h0j2k"]
+[ext_resource type="PackedScene" uid="uid://d126mtj2j4thf" path="res://Enemies/Billy/Billy.tscn" id="3_f0cvv"]
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_ujtpc"]
+vertices = PackedVector3Array(-25.8663, -4.1758, -6.8663, -12.1163, -4.1758, -6.8663, -12.1163, -4.1758, -7.8663, -10.8663, -4.1758, -8.1163, -10.8663, -4.1758, -25.8663, -25.8663, -4.1758, -25.8663, 11.6337, -4.1758, -10.1163, 12.6337, -4.1758, -10.3663, 12.6337, -4.1758, -25.8663, -10.1163, -4.1758, -8.1163, -9.8663, -4.1758, -7.6163, 11.8837, -4.1758, -8.1163, 13.8837, -4.1758, -8.3663, 13.3837, -4.1758, -8.1163, 17.8837, -4.1758, -4.3663, 18.1337, -4.1758, -4.8663, 13.8837, -4.1758, -10.1163, 19.8837, -4.1758, -4.8663, 25.8837, -4.1758, -3.3663, 25.8837, -4.1758, -25.8663, 20.1337, -4.1758, -3.1163, 7.6337, -4.1758, 13.1337, 7.8837, -4.1758, 12.1337, 7.3837, -4.1758, 11.8837, -4.6163, -4.1758, 13.1337, 18.8837, -4.1758, 9.8837, 18.8837, -4.1758, 4.8837, 17.8837, -4.1758, 4.6337, 7.6337, -4.1758, 9.8837, -9.8663, -4.1758, -6.3663, -11.8663, -4.1758, -5.8663, -5.1163, -4.1758, 13.6337, -10.3663, -4.1758, -5.8663, -25.8663, -4.1758, 14.6337, -5.1163, -4.1758, 14.8837, 20.1337, -4.1758, 3.1337, 25.8837, -4.1758, 3.3837, 21.1337, -4.1758, 9.8837, 21.3837, -4.1758, 11.1337, 25.8837, -4.1758, 11.1337, 20.1337, -4.1758, 4.6337, 8.3837, -4.1758, 13.3837, 21.1337, -4.1758, 12.1337, 8.3837, -4.1758, 15.1337, 6.1337, -4.1758, 15.3837, 6.1337, -4.1758, 25.8837, 25.8837, -4.1758, 25.8837, -2.8663, -4.1758, 25.8837, -2.8663, -4.1758, 15.3837, -4.8663, -4.1758, 15.3837, -25.8663, -4.1758, 25.8837)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(4, 0, 5), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 10), PackedInt32Array(8, 10, 9), PackedInt32Array(8, 9, 4), PackedInt32Array(9, 3, 4), PackedInt32Array(6, 11, 10), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 13), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 8), PackedInt32Array(18, 8, 19), PackedInt32Array(18, 20, 17), PackedInt32Array(12, 16, 15), PackedInt32Array(15, 16, 17), PackedInt32Array(16, 7, 8), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 21, 24), PackedInt32Array(26, 25, 27), PackedInt32Array(27, 25, 28), PackedInt32Array(13, 14, 11), PackedInt32Array(11, 14, 27), PackedInt32Array(29, 10, 24), PackedInt32Array(24, 10, 28), PackedInt32Array(28, 10, 11), PackedInt32Array(28, 11, 27), PackedInt32Array(28, 23, 24), PackedInt32Array(0, 1, 30), PackedInt32Array(30, 32, 31), PackedInt32Array(34, 33, 31), PackedInt32Array(31, 33, 30), PackedInt32Array(30, 33, 0), PackedInt32Array(29, 24, 32), PackedInt32Array(32, 24, 31), PackedInt32Array(20, 18, 35), PackedInt32Array(35, 18, 36), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(39, 40, 35), PackedInt32Array(39, 35, 36), PackedInt32Array(26, 40, 25), PackedInt32Array(25, 40, 37), PackedInt32Array(21, 22, 41), PackedInt32Array(41, 22, 42), PackedInt32Array(39, 42, 38), PackedInt32Array(45, 44, 43), PackedInt32Array(39, 46, 42), PackedInt32Array(42, 46, 43), PackedInt32Array(43, 46, 45), PackedInt32Array(43, 41, 42), PackedInt32Array(49, 48, 47), PackedInt32Array(49, 47, 34), PackedInt32Array(34, 47, 33), PackedInt32Array(33, 47, 50), PackedInt32Array(48, 44, 47), PackedInt32Array(47, 44, 45)]
 
-[node name="World" parent="." instance=ExtResource("2_h0j2k")]
+[node name="World" type="Node3D"]
+script = ExtResource("1_dsfdl")
 
-[node name="Character" parent="." instance=ExtResource("2_55nbn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.349356, 0)
-JUMP = "player_jump"
-LEFT = "player_left"
-RIGHT = "player_right"
-FORWARD = "player_forward"
-BACKWARD = "player_backward"
-CROUCH = "player_crouch"
-SPRINT = "player_sprint"
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.59051, 0)
+navigation_mesh = SubResource("NavigationMesh_ujtpc")
+
+[node name="World" parent="NavigationRegion3D" instance=ExtResource("2_h0j2k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.59051, 0)
+
+[node name="Billy" parent="." instance=ExtResource("3_f0cvv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19501, 0)
+SPEED = 3.5
+TURN_SPEED = 15.0
+
+[node name="Player" parent="." instance=ExtResource("2_55nbn")]
+transform = Transform3D(0.336208, 0, 0.941788, 0, 1, 0, -0.941788, 0, 0.336208, 13.9135, 0, -3.48979)
