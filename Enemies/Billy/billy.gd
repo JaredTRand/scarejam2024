@@ -7,16 +7,22 @@ extends CharacterBody3D
 @onready var wait_in_pos_timer:Timer = $wait_in_pos_timer
 
 @export var SPEED:float
+@export var RUN_SPEED:float
 @export var TURN_SPEED:float
-
+@export var ENEMY_FOV = 70
 @onready var wander_pos = set_rand_wander_pos()
 var player_pos
 @onready var rng = RandomNumberGenerator.new()
 
+var player_in_view
+
+func _ready():
+	ENEMY_FOV = cos(deg_to_rad(ENEMY_FOV))
+
 func _physics_process(delta):
-	$"../Player/UserInterface/DebugPanel".add_property("Wandering POS", wander_pos, 6)
-	$"../Player/UserInterface/DebugPanel".add_property("Enemy POS", global_transform.origin, 7)
-	$"../Player/UserInterface/DebugPanel".add_property("Enemy State", player_view_state, 8)
+	$"../Player/UserInterface/DebugPanel".add_property("Wandering POS", wander_pos, 5)
+	$"../Player/UserInterface/DebugPanel".add_property("Enemy POS", global_transform.origin, 6)
+	$"../Player/UserInterface/DebugPanel".add_property("Enemy State", player_view_state, 7)
 	if(player_view_state == "WAITING"):
 		return
 	elif(player_view_state == "PURSUING"): #
@@ -29,7 +35,11 @@ func _physics_process(delta):
 			wait_in_pos_timer.start(rng.randf_range(1.0, 11.0))
 		else:
 			wander()
-	
+
+func _process(delta):
+	if(player_in_view):
+		check_if_player_in_sight()
+
 func update_target_loc(target_loc):
 	player_pos = target_loc
 
@@ -65,3 +75,26 @@ func wander():
 func _on_wait_in_pos_timer_timeout():
 	set_rand_wander_pos()
 	player_view_state = "HIDDEN"
+
+func check_if_player_in_sight():
+		var direction = global_position.direction_to( player_pos )
+		var facing = (global_transform.basis.tdotz(direction)) * -1
+		print(facing)
+		print(ENEMY_FOV)
+		print("")
+		var canseeya
+		if(facing > ENEMY_FOV):
+			canseeya = "Im lookin at ya"
+		else:
+			canseeya = "I cant see ya"
+		$"../Player/UserInterface/DebugPanel".add_property("Can enemy see you", canseeya, 8)
+		
+		player_view_state = "PURSUING"
+
+func _on_see_player_body_entered(body):
+	if(body.is_in_group("player")):
+		player_in_view = true
+
+func _on_see_player_body_exited(body):
+	if(body.is_in_group("player")):
+		player_in_view = false
