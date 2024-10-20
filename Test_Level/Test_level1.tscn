@@ -20,7 +20,7 @@ navigation_mesh = SubResource("NavigationMesh_ujtpc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.59051, 0)
 
 [node name="Player" parent="." instance=ExtResource("2_55nbn")]
-transform = Transform3D(0.336208, 0, 0.941788, 0, 1, 0, -0.941788, 0, 0.336208, 13.9135, 0, -3.48979)
+transform = Transform3D(0.336208, 0, 0.941788, 0, 1, 0, -0.941788, 0, 0.336208, 20.0354, 0.736707, 7.73841)
 
 [node name="Billy" parent="." instance=ExtResource("3_f0cvv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.976617, 1.69084, -3.14528)

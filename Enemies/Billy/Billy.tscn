@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d126mtj2j4thf"]
+[gd_scene load_steps=13 format=3 uid="uid://d126mtj2j4thf"]
 
 [ext_resource type="Script" path="res://Enemies/Billy/billy.gd" id="1_07erv"]
 
@@ -27,11 +27,17 @@ material = SubResource("StandardMaterial3D_rr6ue")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ryej0"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_t1bbh"]
+radius = 12.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gg82o"]
+radius = 20.0
 
 [node name="Billy" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_07erv")
-SPEED = 4.0
+SPEED = 2.0
+RUN_SPEED = 4.0
 TURN_SPEED = 3.5
+ENEMY_FOV = 60
 
 [node name="billiyMesh" type="Node3D" parent="."]
 
@@ -69,8 +75,16 @@ one_shot = true
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="see_player"]
-transform = Transform3D(-13, 0, -1.1365e-06, 0, 1, 0, 1.1365e-06, 0, -13, 0, 0, 0)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 shape = SubResource("CylinderShape3D_t1bbh")
+
+[node name="notice_player" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="notice_player"]
+shape = SubResource("CylinderShape3D_gg82o")
 
 [connection signal="timeout" from="wait_in_pos_timer" to="." method="_on_wait_in_pos_timer_timeout"]
 [connection signal="body_entered" from="see_player" to="." method="_on_see_player_body_entered"]
+[connection signal="body_exited" from="see_player" to="." method="_on_see_player_body_exited"]
+[connection signal="body_entered" from="notice_player" to="." method="_on_notice_player_body_entered"]
+[connection signal="body_exited" from="notice_player" to="." method="_on_notice_player_body_exited"]
