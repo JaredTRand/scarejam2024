@@ -83,6 +83,18 @@ shape = SubResource("CylinderShape3D_t1bbh")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="notice_player"]
 shape = SubResource("CylinderShape3D_gg82o")
 
+[node name="vision_cast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.719529, 0)
+target_position = Vector3(0, 0, -50)
+
+[node name="vision_cast2" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.72, 0)
+target_position = Vector3(0, 0, -50)
+
+[node name="vision_cast3" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.72, 0)
+target_position = Vector3(0, 0, -50)
+
 [connection signal="timeout" from="wait_in_pos_timer" to="." method="_on_wait_in_pos_timer_timeout"]
 [connection signal="body_entered" from="see_player" to="." method="_on_see_player_body_entered"]
 [connection signal="body_exited" from="see_player" to="." method="_on_see_player_body_exited"]

@@ -2,7 +2,8 @@ extends CharacterBody3D
 
 @onready var face_dir:Node3D = $face_dir
 @onready var nav_agent:NavigationAgent3D = $NavigationAgent3D
-@onready var player_view_state:String = "HIDDEN" # HIDDEN, PURSUING, SEARCHING, WAITING, NOTICED
+@onready var player_view_state:String = "HIDDEN" # HIDDEN, NOTICED
+#@onready var billy_status:String = "WANDERING" # WANDERING, PURSUING, SEARCHING, WAITING, NOTICED
 @onready var navRegion:NavigationRegion3D = $"../NavigationRegion3D"
 @onready var wait_in_pos_timer:Timer = $wait_in_pos_timer
 
@@ -16,6 +17,9 @@ var player_pos
 var last_player_pos
 @onready var rng = RandomNumberGenerator.new()
 @onready var cur_speed = RUN_SPEED
+@onready var vision_cast:RayCast3D = $vision_cast
+@onready var vision_cast2:RayCast3D = $vision_cast2
+@onready var vision_cast3:RayCast3D = $vision_cast3
 var player_in_view:bool
 var player_noticed:bool
 
@@ -104,19 +108,25 @@ func _on_wait_in_pos_timer_timeout():
 func check_if_player_in_sight():
 		var direction = global_position.direction_to( player_pos )
 		var facing = (global_transform.basis.tdotz(direction)) * -1
-		print(facing)
-		print(ENEMY_FOV)
-		print("")
 		var canseeya
+		
+		vision_cast.look_at(player_pos)
+		vision_cast2.look_at(player_pos)
+		vision_cast3.look_at(player_pos)
+		var can_see = (vision_cast.get_collider() && vision_cast.get_collider().is_in_group("player")) || (vision_cast2.get_collider() && vision_cast2.get_collider().is_in_group("player")) || (vision_cast3.get_collider() && vision_cast3.get_collider().is_in_group("player"))
+		
 		if(facing > ENEMY_FOV):
 			canseeya = "Im lookin at ya"
 			if(player_in_view):
 				player_view_state = "PURSUING"
 			elif(player_noticed):
 				player_view_state = "NOTICED"
+			
+			
 		else:
 			canseeya = "I cant see ya"
-		$"../Player/UserInterface/DebugPanel".add_property("Can enemy see you", canseeya, 10)
+		$"../Player/UserInterface/DebugPanel".add_property("Can enemy see you", canseeya, 11)
+		$"../Player/UserInterface/DebugPanel".add_property("behind wall? ", can_see, 12)
 		
 
 
