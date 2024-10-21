@@ -1,14 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://dr5dgsbhtlxuo"]
+[gd_scene load_steps=3 format=3 uid="uid://dr5dgsbhtlxuo"]
 
 [ext_resource type="PackedScene" uid="uid://c74obu4lmvtdc" path="res://Test_Level/shapes/box.tscn" id="1_hd7gf"]
+[ext_resource type="PackedScene" uid="uid://7547ci7hhlvc" path="res://teleport_pad.tscn" id="2_mjymx"]
 
 [node name="World" type="Node3D"]
 
 [node name="box2" parent="." instance=ExtResource("1_hd7gf")]
-transform = Transform3D(52.7326, 0, 0, 0, 0.0969593, 0, 0, 0, 52.7326, 0, 0, 0)
+transform = Transform3D(84.3722, 0, 0, 0, 0.0969593, 0, 0, 0, 84.3722, 0, 0, 0)
 
 [node name="box" parent="." instance=ExtResource("1_hd7gf")]
-transform = Transform3D(12.3363, 0, 0, 0, 2.97216, 0, 0, 0, 1, 1.65769, 0.594165, 14.3807)
+transform = Transform3D(12.3363, 0, 0, 0, 2.97216, 0, 0, 0, 1, 1.65769, 1.06235, 14.3807)
+
+[node name="box7" parent="." instance=ExtResource("1_hd7gf")]
+transform = Transform3D(-1.88671e-07, 0, -1, 0, 2.97216, 0, 4.3163, 0, -4.37114e-08, 8.18236, 1.06235, 12.6993)
 
 [node name="box3" parent="." groups=["interactable"] instance=ExtResource("1_hd7gf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8002, 0.54848, -9.2456)
@@ -24,3 +28,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0.5, -7)
 
 [node name="box6" parent="." instance=ExtResource("1_hd7gf")]
 transform = Transform3D(0.999079, 0, 0, 0, 2.20478, 0, 0, 0, 8.42089, 19, 0.5, 0)
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="teleport_spot" parent="Node3D" instance=ExtResource("2_mjymx")]
+
+[node name="teleport_spot2" parent="Node3D" instance=ExtResource("2_mjymx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 28)
+
+[node name="teleport_spot3" parent="Node3D" instance=ExtResource("2_mjymx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 30)
+
+[node name="teleport_spot4" parent="Node3D" instance=ExtResource("2_mjymx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -30)
+
+[node name="teleport_spot5" parent="Node3D" instance=ExtResource("2_mjymx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -30)
