@@ -1,28 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://d126mtj2j4thf"]
+[gd_scene load_steps=6 format=3 uid="uid://d126mtj2j4thf"]
 
 [ext_resource type="Script" path="res://Enemies/Billy/billy.gd" id="1_07erv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jskm7"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ncq5n"]
-material = SubResource("StandardMaterial3D_jskm7")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qwo82"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_n7gec"]
-material = SubResource("StandardMaterial3D_qwo82")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04mq1"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_biasj"]
-material = SubResource("StandardMaterial3D_04mq1")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr6ue"]
-albedo_color = Color(1, 1, 0.407843, 1)
-
-[sub_resource type="PrismMesh" id="PrismMesh_x64ui"]
-material = SubResource("StandardMaterial3D_rr6ue")
+[ext_resource type="PackedScene" uid="uid://c3320wgnbq4j5" path="res://Enemies/Billy/billy_model.tscn" id="2_20c1w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ryej0"]
 
@@ -40,30 +19,11 @@ TURN_SPEED = 3.5
 ENEMY_FOV = 60
 TELEPORT_PERC = 15
 
-[node name="billiyMesh" type="Node3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="billiyMesh"]
-mesh = SubResource("CapsuleMesh_ncq5n")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="billiyMesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.606977, -0.187419)
-mesh = SubResource("SphereMesh_n7gec")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="billiyMesh/MeshInstance3D2"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.175, 0.175, -0.395)
-mesh = SubResource("SphereMesh_biasj")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="billiyMesh/MeshInstance3D2"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.175, 0.175, -0.395)
-mesh = SubResource("SphereMesh_biasj")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="billiyMesh/MeshInstance3D2"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.319577, 0, 0.551204, -0.00555694)
-mesh = SubResource("PrismMesh_x64ui")
-
 [node name="face_dir" type="Node3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.37694, 0, 0, 0, 1, 0, 0.388203, 0)
 shape = SubResource("CapsuleShape3D_ryej0")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
@@ -93,16 +53,19 @@ shape = SubResource("CylinderShape3D_t1bbh")
 shape = SubResource("CylinderShape3D_gg82o")
 
 [node name="vision_cast" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.719529, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4918, 0)
 target_position = Vector3(0, 0, -50)
 
 [node name="vision_cast2" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.72, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 1.49227, 0)
 target_position = Vector3(0, 0, -50)
 
 [node name="vision_cast3" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.72, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 1.49227, 0)
 target_position = Vector3(0, 0, -50)
+
+[node name="billy_model" parent="." instance=ExtResource("2_20c1w")]
+transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, -1, 0)
 
 [connection signal="timeout" from="wait_in_pos_timer" to="." method="_on_wait_in_pos_timer_timeout"]
 [connection signal="timeout" from="teleport_check" to="." method="_on_teleport_check_timeout"]

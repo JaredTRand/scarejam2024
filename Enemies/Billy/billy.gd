@@ -7,6 +7,7 @@ extends CharacterBody3D
 #@onready var billy_status:String = "WANDERING" # WANDERING, PURSUING, SEARCHING, WAITING, NOTICED, GOINGTOLASTPOS
 @onready var navRegion:NavigationRegion3D = $"../NavigationRegion3D"
 @onready var wait_in_pos_timer:Timer = $wait_in_pos_timer
+@onready var animation_player:AnimationPlayer = $billy_model/AnimationPlayer
 
 @export var SPEED:float
 @export var RUN_SPEED:float
@@ -41,6 +42,10 @@ func _physics_process(delta):
 	$"../Player/UserInterface/DebugPanel".add_property("SPEED", SPEED)
 	$"../Player/UserInterface/DebugPanel".add_property("last_player_pos", last_player_pos)
 
+	if(cur_speed == RUN_SPEED):
+		animation_player.play("RUN")
+	else:
+		animation_player.play("WALK1")
 	if(player_view_state == "NOTICED"):
 		if(!player_noticed): return
 		if(previous_player_view_state == "PURSUING"):
@@ -65,6 +70,7 @@ func _physics_process(delta):
 		cur_speed = RUN_SPEED
 		move_to_player()
 	elif(player_view_state == "WAITING"):
+		animation_player.play("IDLESHORT")
 		return
 	elif(player_view_state == "HIDDEN"):
 		cur_speed = SPEED
