@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d126mtj2j4thf"]
+[gd_scene load_steps=8 format=3 uid="uid://d126mtj2j4thf"]
 
 [ext_resource type="Script" path="res://Enemies/Billy/billy.gd" id="1_07erv"]
 [ext_resource type="PackedScene" uid="uid://c3320wgnbq4j5" path="res://Enemies/Billy/billy_model.tscn" id="2_20c1w"]
+[ext_resource type="AudioStream" uid="uid://c0lbc383rt8lo" path="res://Enemies/Billy/sounds/teleport.mp3" id="2_gmi0u"]
+[ext_resource type="AudioStream" uid="uid://ce1hy874366sw" path="res://Enemies/Billy/sounds/monsterbreathingrun.mp3" id="2_gwyob"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ryej0"]
 
@@ -27,6 +29,13 @@ transform = Transform3D(1, 0, 0, 0, 1.37694, 0, 0, 0, 1, 0, 0.388203, 0)
 shape = SubResource("CapsuleShape3D_ryej0")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="running_sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_gwyob")
+
+[node name="sound_maker" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_gmi0u")
+volume_db = 1.0
 
 [node name="wait_in_pos_timer" type="Timer" parent="."]
 wait_time = 1.5

@@ -30,6 +30,9 @@ var player_noticed:bool
 @onready var teleport_timer = $teleport_timer
 var last_teleport_pad
 
+@onready var sound_maker = $sound_maker
+@onready var running_sound = $running_sound
+
 func _ready():
 	ENEMY_FOV = cos(deg_to_rad(ENEMY_FOV))
 
@@ -42,12 +45,16 @@ func _physics_process(delta):
 	$"../Player/UserInterface/DebugPanel".add_property("SPEED", SPEED)
 	$"../Player/UserInterface/DebugPanel".add_property("last_player_pos", last_player_pos)
 
-	if(cur_speed == RUN_SPEED):
+	if(player_view_state == "WAITING"):
+		animation_player.play("IDLELONG")
+	elif(cur_speed == RUN_SPEED):
 		animation_player.play("RUN")
+		play_sound(load("res://Enemies/Billy/sounds/monsterbreathingrun.mp3"), [-3, -5], [1, 2.5])
 	elif(cur_speed == SPEED):
 		animation_player.play("WALK1")
-	else:
-		animation_player.play("IDLELONG")
+		sound_maker.stop()
+		
+		
 	if(player_view_state == "NOTICED"):
 		if(!player_noticed): return
 		if(previous_player_view_state == "PURSUING"):
@@ -157,6 +164,21 @@ func lost_View_of_player():
 	wander_pos = last_player_pos
 	nav_agent.target_position = wander_pos
 	
+func play_sound(sound, max_db_rng:Array = [0,0], pitch_rng:Array = [0,0], skip_wait_for_done:bool = false):
+	if skip_wait_for_done or !sound_maker.is_playing(): 
+		 #just to give the sound a litte variety
+		sound_maker.stream = sound
+		
+		if pitch_rng[0] == pitch_rng[1]:
+			sound_maker.set_pitch_scale(pitch_rng[0])
+		else:
+			sound_maker.set_pitch_scale(RandomNumberGenerator.new().randf_range(pitch_rng[0], pitch_rng[1]))
+			
+		if max_db_rng[0] == max_db_rng[1]:
+			sound_maker.volume_db = max_db_rng[0]
+		else:
+			sound_maker.volume_db = RandomNumberGenerator.new().randf_range(max_db_rng[0], max_db_rng[1])
+		sound_maker.play()
 
 func switch_state(newstate):
 	previous_player_view_state = player_view_state
@@ -188,6 +210,8 @@ func teleport():
 	
 	global_transform.origin = teleport_to
 	global_transform.origin.y = enemy_y
+	
+	play_sound(load("res://Enemies/Billy/sounds/teleport.mp3"), [-3, -5], [1, 2.5])
 	
 	set_rand_wander_pos()
 	teleport_timer.start()

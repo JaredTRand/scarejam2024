@@ -82,6 +82,9 @@ extends CharacterBody3D
 @export var gravity_enabled : bool = true
 
 @onready var interact_ray: RayCast3D =  $Head/Camera/Interact
+
+@onready var footstep_timer = $footstep_timer
+@onready var footstep_sound = $footstep_sound
 # Member variables
 var speed : float = base_speed
 var current_speed : float = 0.0
@@ -190,6 +193,15 @@ func _physics_process(delta):
 	if dynamic_fov: # This may be changed to an AnimationPlayer
 		update_camera_fov()
 	
+	if footstep_timer.is_stopped() and input_dir:
+		play_sound(load("res://addons/fpc/sounds/footstep.wav"), [-3, -5], [1, 2.5])
+		if state == "sprinting":
+			footstep_timer.start(.3)
+		elif state == "crouching":
+			footstep_timer.start(1)
+		else:
+			footstep_timer.start(.5)
+	
 	if view_bobbing:
 		headbob_animation(input_dir)
 	
@@ -203,6 +215,21 @@ func _physics_process(delta):
 	
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
+func play_sound(sound, max_db_rng:Array = [0,0], pitch_rng:Array = [0,0], skip_wait_for_done:bool = false):
+	if skip_wait_for_done or !footstep_sound.is_playing(): 
+		 #just to give the sound a litte variety
+		footstep_sound.stream = sound
+		
+		if pitch_rng[0] == pitch_rng[1]:
+			footstep_sound.set_pitch_scale(pitch_rng[0])
+		else:
+			footstep_sound.set_pitch_scale(RandomNumberGenerator.new().randf_range(pitch_rng[0], pitch_rng[1]))
+			
+		if max_db_rng[0] == max_db_rng[1]:
+			footstep_sound.volume_db = max_db_rng[0]
+		else:
+			footstep_sound.volume_db = RandomNumberGenerator.new().randf_range(max_db_rng[0], max_db_rng[1])
+		footstep_sound.play()
 
 func handle_jumping():
 	if jumping_enabled:
