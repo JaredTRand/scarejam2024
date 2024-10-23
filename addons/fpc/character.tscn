@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=26 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="Texture2D" uid="uid://domc082c7mm2g" path="res://addons/fpc/assets/black2.png" id="2_vcp24"]
 [ext_resource type="Script" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="AudioStream" uid="uid://dl280571rlt4r" path="res://addons/fpc/sounds/footstep.wav" id="4_hw303"]
@@ -147,6 +148,67 @@ tracks/4/keys = {
 _data = {
 "RESET": SubResource("Animation_j8cx7"),
 "crouch": SubResource("Animation_5ec5e")
+}
+
+[sub_resource type="Animation" id="Animation_oltfx"]
+resource_name = "WakeUp"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blinkers/black_screen:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.733333, 1.13333, 2.31667, 3, 3.6, 5, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.55, -0.1), Vector3(0, -0.586, -0.1), Vector3(0, -0.55, -0.1), Vector3(0, -0.55, -0.1), Vector3(0, -0.6, -0.1), Vector3(0, -0.55, -0.1), Vector3(0, -0.55, -0.1), Vector3(0, -1, -0.1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blinkers/black_screen2:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.733333, 1.13333, 2.31667, 3, 3.6, 5, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.55, -0.1), Vector3(0, 0.586, -0.1), Vector3(0, 0.55, -0.1), Vector3(0, 0.55, -0.1), Vector3(0, 0.6, -0.1), Vector3(0, 0.55, -0.1), Vector3(0, 0.55, -0.1), Vector3(0, 1, -0.1)]
+}
+
+[sub_resource type="Animation" id="Animation_io4yf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blinkers/black_screen:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.55, -0.1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blinkers/black_screen2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.55, -0.1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tdbgj"]
+_data = {
+"RESET": SubResource("Animation_io4yf"),
+"WakeUp": SubResource("Animation_oltfx")
 }
 
 [sub_resource type="Animation" id="Animation_gh776"]
@@ -390,6 +452,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 [node name="Interact" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -2.5)
 
+[node name="blinkers" type="Node3D" parent="Head/Camera"]
+
+[node name="black_screen" type="Sprite3D" parent="Head/Camera/blinkers"]
+transform = Transform3D(0.095, 0, 0, 0, 0.095, 0, 0, 0, 0.095, 0, -0.55, -0.1)
+transparent = false
+double_sided = false
+no_depth_test = true
+texture = ExtResource("2_vcp24")
+
+[node name="black_screen2" type="Sprite3D" parent="Head/Camera/blinkers"]
+transform = Transform3D(0.095, 0, 0, 0, 0.095, 0, 0, 0, 0.095, 0, 0.55, -0.1)
+transparent = false
+double_sided = false
+no_depth_test = true
+texture = ExtResource("2_vcp24")
+
+[node name="WakeUpAnimation" type="AnimationPlayer" parent="Head"]
+root_node = NodePath("../Camera")
+libraries = {
+"": SubResource("AnimationLibrary_tdbgj")
+}
+
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
 "": SubResource("AnimationLibrary_o0unb")
@@ -439,3 +523,10 @@ one_shot = true
 
 [node name="footstep_sound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_hw303")
+
+[node name="heal_interval" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="heal_timer" type="Timer" parent="."]
+wait_time = 5.0

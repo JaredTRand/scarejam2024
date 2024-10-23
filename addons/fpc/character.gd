@@ -81,6 +81,13 @@ extends CharacterBody3D
 ## Use with caution.
 @export var gravity_enabled : bool = true
 
+@export var player_health_max : int = 100
+@onready var current_player_health:int = player_health_max
+@export var player_heal_starttime : int = 5
+@onready var heal_timer:Timer = $heal_timer
+@onready var heal_interval:Timer = $heal_interval
+@onready var billy = $"../Billy"
+@onready var wakeup = $Head/WakeUpAnimation
 @onready var interact_ray: RayCast3D =  $Head/Camera/Interact
 
 @onready var footstep_timer = $footstep_timer
@@ -118,8 +125,15 @@ func _ready():
 	HEADBOB_ANIMATION.play("RESET")
 	JUMP_ANIMATION.play("RESET")
 	CROUCH_ANIMATION.play("RESET")
-	
+	wakeup.play("WakeUp")
 	check_controls()
+	
+	billy.player_hurt.connect(_on_player_hurt)
+
+func _on_player_hurt(damage):
+	heal_timer.start()
+	current_player_health -= damage
+	play_sound(load("res://addons/fpc/sounds/hit.wav"))
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -396,6 +410,10 @@ func _process(delta):
 	if !is_on_floor():
 		status += " in the air"
 	$UserInterface/DebugPanel.add_property("State", status)
+	$UserInterface/DebugPanel.add_property("Health", current_player_health)
+	if(current_player_health < player_health_max && heal_timer.is_stopped() && heal_interval.is_stopped()):
+		current_player_health += 1
+		heal_interval.start()
 	
 	if pausing_enabled:
 		if Input.is_action_just_pressed(PAUSE):

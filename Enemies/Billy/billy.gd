@@ -31,7 +31,13 @@ var player_noticed:bool
 var last_teleport_pad
 
 @onready var sound_maker = $sound_maker
-@onready var running_sound = $running_sound
+@onready var teleport_sound = $teleport_sound
+@onready var footstep_sound = $footstep_sound
+@onready var footstep_timer = $footstep_timer
+
+@onready var player_in_hurt_zone = false
+@onready var attack_cooldown:Timer = $hurt_player/attack_cooldown
+signal player_hurt
 
 func _ready():
 	ENEMY_FOV = cos(deg_to_rad(ENEMY_FOV))
@@ -45,7 +51,9 @@ func _physics_process(delta):
 	$"../Player/UserInterface/DebugPanel".add_property("SPEED", SPEED)
 	$"../Player/UserInterface/DebugPanel".add_property("last_player_pos", last_player_pos)
 
-	if(player_view_state == "WAITING"):
+	if(player_view_state == "SHOUT"):
+		return
+	elif(player_view_state == "WAITING"):
 		animation_player.play("IDLELONG")
 	elif(cur_speed == RUN_SPEED):
 		animation_player.play("RUN")
@@ -54,6 +62,12 @@ func _physics_process(delta):
 		animation_player.play("WALK1")
 		sound_maker.stop()
 		
+	if footstep_timer.is_stopped() and player_view_state == "PURSUING" or player_view_state == "WANDERING" or player_view_state == "NOTICED" or player_view_state == "GOINGTOLASTPOS":
+		play_footstep_sound(load("res://Enemies/Billy/sounds/thud.wav"), [-4, -5], [-1, -2.5])
+		if cur_speed == RUN_SPEED:
+			footstep_timer.start(.3)
+		else:
+			footstep_timer.start(.5)
 		
 	if(player_view_state == "NOTICED"):
 		if(!player_noticed): return
@@ -70,8 +84,7 @@ func _physics_process(delta):
 		cur_speed = RUN_SPEED
 		
 		if(abs(wander_pos.x - global_transform.origin.x) < 0.1 and abs(wander_pos.z - global_transform.origin.z) < 0.1): #if timer stopped or at pos, get new pos
-			switch_state("WAITING")
-			wait_in_pos_timer.start(rng.randf_range(1.0, 11.0))
+			SHOUT()
 		else:
 			wander()
 	elif(player_view_state == "PURSUING"): #
@@ -93,6 +106,11 @@ func _physics_process(delta):
 			wander()
 
 func _process(delta):
+	if(player_in_hurt_zone && attack_cooldown.is_stopped()):
+		player_hurt.emit(51)
+		animation_player.play(["HIT1", "HIT2"].pick_random())
+		attack_cooldown.start()
+		switch_state("ATTACKING")
 	if(player_in_view or player_noticed):
 		check_if_player_in_sight()
 
@@ -144,7 +162,7 @@ func check_if_player_in_sight():
 		
 		if(!can_see): # if i cant see ya, i cant see ya.
 			canseeya = "I cant see ya, ya behind a wall or somethin ya little shit"
-			if(player_view_state == "NOTICED" || player_view_state == "PURSUING" && player_view_state != "GOINGTOLASTPOS"): # if i cant see ya, but i used to see ya
+			if(player_view_state == "NOTICED" || player_view_state == "PURSUING" && player_view_state != "GOINGTOLASTPOS" && player_view_state != "SHOUT"): # if i cant see ya, but i used to see ya
 				lost_View_of_player()
 		elif(facing > ENEMY_FOV && can_see): #if ya in my fov and i can see ya
 			canseeya = "Im lookin at ya"
@@ -179,10 +197,33 @@ func play_sound(sound, max_db_rng:Array = [0,0], pitch_rng:Array = [0,0], skip_w
 		else:
 			sound_maker.volume_db = RandomNumberGenerator.new().randf_range(max_db_rng[0], max_db_rng[1])
 		sound_maker.play()
-
+func play_footstep_sound(sound, max_db_rng:Array = [0,0], pitch_rng:Array = [0,0], skip_wait_for_done:bool = false):
+	if skip_wait_for_done or !footstep_sound.is_playing(): 
+		 #just to give the sound a litte variety
+		footstep_sound.stream = sound
+		
+		if pitch_rng[0] == pitch_rng[1]:
+			footstep_sound.set_pitch_scale(pitch_rng[0])
+		else:
+			footstep_sound.set_pitch_scale(RandomNumberGenerator.new().randf_range(pitch_rng[0], pitch_rng[1]))
+			
+		if max_db_rng[0] == max_db_rng[1]:
+			footstep_sound.volume_db = max_db_rng[0]
+		else:
+			footstep_sound.volume_db = RandomNumberGenerator.new().randf_range(max_db_rng[0], max_db_rng[1])
+		footstep_sound.play()
+		
 func switch_state(newstate):
 	previous_player_view_state = player_view_state
 	player_view_state = newstate
+
+func _on_hurt_player_body_entered(body):
+	if(body.is_in_group("player")):
+		player_in_hurt_zone = true
+	
+func _on_hurt_player_body_exited(body):
+	if(body.is_in_group("player")):
+		player_in_hurt_zone = false
 
 func _on_see_player_body_entered(body):
 	if(body.is_in_group("player")):
@@ -199,7 +240,7 @@ func _on_notice_player_body_entered(body):
 func _on_notice_player_body_exited(body):
 	if(body.is_in_group("player")):
 		player_noticed = false
-		if(player_view_state == "NOTICED" || player_view_state == "PURSUING" && player_view_state != "GOINGTOLASTPOS"):
+		if(player_view_state == "NOTICED" || player_view_state == "PURSUING" && player_view_state != "GOINGTOLASTPOS" && player_view_state != "SHOUT"):
 			lost_View_of_player()
 
 
@@ -211,7 +252,7 @@ func teleport():
 	global_transform.origin = teleport_to
 	global_transform.origin.y = enemy_y
 	
-	play_sound(load("res://Enemies/Billy/sounds/teleport.mp3"), [-3, -5], [1, 2.5])
+	teleport_sound.play()
 	
 	set_rand_wander_pos()
 	teleport_timer.start()
@@ -221,3 +262,15 @@ func _on_teleport_check_timeout():
 	$"../Player/UserInterface/DebugPanel".add_property("teleport index ", index)
 	if(index < TELEPORT_PERC && teleport_timer.is_stopped() && (player_view_state != "PURSUING" && player_view_state != "SEARCHING"  && player_view_state != "NOTICED")):
 		teleport()
+
+func SHOUT():
+	switch_state("SHOUT")
+	animation_player.play("SHOUT")
+	sound_maker.stop()
+	play_sound(load("res://Enemies/Billy/sounds/humanmonsterscream.wav"),[-10, -11], [1, 2])
+func _on_animation_player_animation_finished(anim_name):
+	if(anim_name == "SHOUT"):
+		switch_state("WAITING")
+		wait_in_pos_timer.start(rng.randf_range(1.0, 11.0))
+	elif(anim_name == "HIT1" or anim_name == "HIT2"):
+		switch_state("PURSUING")
