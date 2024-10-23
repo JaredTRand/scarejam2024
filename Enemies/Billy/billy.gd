@@ -44,8 +44,10 @@ func _physics_process(delta):
 
 	if(cur_speed == RUN_SPEED):
 		animation_player.play("RUN")
-	else:
+	elif(cur_speed == SPEED):
 		animation_player.play("WALK1")
+	else:
+		animation_player.play("IDLELONG")
 	if(player_view_state == "NOTICED"):
 		if(!player_noticed): return
 		if(previous_player_view_state == "PURSUING"):
@@ -133,7 +135,11 @@ func check_if_player_in_sight():
 		vision_cast3.look_at(player_pos)
 		var can_see = (vision_cast.get_collider() && vision_cast.get_collider().is_in_group("player")) || (vision_cast2.get_collider() && vision_cast2.get_collider().is_in_group("player")) || (vision_cast3.get_collider() && vision_cast3.get_collider().is_in_group("player"))
 		
-		if(facing > ENEMY_FOV && can_see):
+		if(!can_see): # if i cant see ya, i cant see ya.
+			canseeya = "I cant see ya, ya behind a wall or somethin ya little shit"
+			if(player_view_state == "NOTICED" || player_view_state == "PURSUING" && player_view_state != "GOINGTOLASTPOS"): # if i cant see ya, but i used to see ya
+				lost_View_of_player()
+		elif(facing > ENEMY_FOV && can_see): #if ya in my fov and i can see ya
 			canseeya = "Im lookin at ya"
 			if(player_in_view):
 				switch_state("PURSUING")
@@ -141,8 +147,6 @@ func check_if_player_in_sight():
 				switch_state("NOTICED")
 		else:
 			canseeya = "I cant see ya"
-			if(!player_view_state == "GOINGTOLASTPOS"):
-				lost_View_of_player()
 			
 		$"../Player/UserInterface/DebugPanel".add_property("Can enemy see you", canseeya)
 		$"../Player/UserInterface/DebugPanel".add_property("behind wall? ", !can_see)
@@ -165,7 +169,6 @@ func _on_see_player_body_entered(body):
 func _on_see_player_body_exited(body):
 	if(body.is_in_group("player")):
 		player_in_view = false
-		#player_view_state = "NOTICED"
 
 func _on_notice_player_body_entered(body):
 	if(body.is_in_group("player")):
@@ -174,6 +177,8 @@ func _on_notice_player_body_entered(body):
 func _on_notice_player_body_exited(body):
 	if(body.is_in_group("player")):
 		player_noticed = false
+		if(player_view_state == "NOTICED" || player_view_state == "PURSUING" && player_view_state != "GOINGTOLASTPOS"):
+			lost_View_of_player()
 
 
 func teleport():
