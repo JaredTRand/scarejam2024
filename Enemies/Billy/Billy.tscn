@@ -36,7 +36,7 @@ one_shot = true
 autostart = true
 
 [node name="teleport_timer" type="Timer" parent="."]
-wait_time = 45.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
@@ -53,15 +53,15 @@ shape = SubResource("CylinderShape3D_t1bbh")
 shape = SubResource("CylinderShape3D_gg82o")
 
 [node name="vision_cast" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4918, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60327, 0)
 target_position = Vector3(0, 0, -50)
 
 [node name="vision_cast2" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 1.49227, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 1.60374, 0)
 target_position = Vector3(0, 0, -50)
 
 [node name="vision_cast3" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 1.49227, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 1.60374, 0)
 target_position = Vector3(0, 0, -50)
 
 [node name="billy_model" parent="." instance=ExtResource("2_20c1w")]

@@ -25,3 +25,4 @@ transform = Transform3D(0.336208, 0, 0.941788, 0, 1, 0, -0.941788, 0, 0.336208, 
 [node name="Billy" parent="." instance=ExtResource("3_f0cvv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.976617, 1.69084, -3.14528)
 TURN_SPEED = 5.0
+TELEPORT_PERC = 60

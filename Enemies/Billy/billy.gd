@@ -182,10 +182,11 @@ func _on_notice_player_body_exited(body):
 
 
 func teleport():
-	var teleport_to:Node3D = teleport_spots.pick_random()
+	#var teleport_to:Node3D = teleport_spots.pick_random()
+	var teleport_to = NavigationServer3D.region_get_random_point(navRegion.get_rid(), 1, false)
 	var enemy_y = global_transform.origin.y
 	
-	global_transform.origin = teleport_to.global_transform.origin
+	global_transform.origin = teleport_to
 	global_transform.origin.y = enemy_y
 	
 	set_rand_wander_pos()
