@@ -92,6 +92,8 @@ extends CharacterBody3D
 
 @onready var footstep_timer = $footstep_timer
 @onready var footstep_sound = $footstep_sound
+
+
 # Member variables
 var speed : float = base_speed
 var current_speed : float = 0.0
@@ -129,6 +131,8 @@ func _ready():
 	check_controls()
 	
 	billy.player_hurt.connect(_on_player_hurt)
+	
+	
 
 func _on_player_hurt(damage):
 	heal_timer.start()
@@ -449,3 +453,8 @@ func _unhandled_input(event : InputEvent):
 			# Where we're going, we don't need InputMap
 			if event.keycode == 4194338: # F7
 				$UserInterface/DebugPanel.visible = !$UserInterface/DebugPanel.visible
+
+
+func _on_dungeon_generator_3d_done_generating():
+	var SpawnPoint = get_tree().get_nodes_in_group("player_spawn_point")
+	global_transform.origin = SpawnPoint[0].global_transform.origin

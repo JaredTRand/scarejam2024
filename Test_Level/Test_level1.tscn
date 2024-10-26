@@ -1,9 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwxbdou71s4mb"]
+[gd_scene load_steps=14 format=3 uid="uid://cwxbdou71s4mb"]
 
 [ext_resource type="Script" path="res://Test_Level/test_level_1.gd" id="1_dsfdl"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="2_55nbn"]
 [ext_resource type="PackedScene" uid="uid://dr5dgsbhtlxuo" path="res://Test_Level/shapes/world.tscn" id="2_h0j2k"]
 [ext_resource type="PackedScene" uid="uid://d126mtj2j4thf" path="res://Enemies/Billy/Billy.tscn" id="3_f0cvv"]
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="5_gxnpd"]
+[ext_resource type="PackedScene" uid="uid://cf13frjr2u0oe" path="res://addons/SimpleDungeons/sample_dungeons/lowpoly_kit_1_rooms/entrance_room.tscn" id="6_vwswn"]
+[ext_resource type="PackedScene" uid="uid://b6t2tduxk8tfn" path="res://addons/SimpleDungeons/sample_dungeons/lowpoly_kit_1_rooms/living_room.tscn" id="7_hxtbr"]
+[ext_resource type="PackedScene" uid="uid://b0m7fmmvtfcnk" path="res://addons/SimpleDungeons/sample_dungeons/lowpoly_kit_1_rooms/spike_hallway.tscn" id="8_gsi1n"]
+[ext_resource type="PackedScene" uid="uid://c5lo6wkhhg76p" path="res://addons/SimpleDungeons/sample_dungeons/lowpoly_kit_1_rooms/stair.tscn" id="9_66t3f"]
+[ext_resource type="PackedScene" uid="uid://bicoj8112x1ra" path="res://addons/SimpleDungeons/sample_dungeons/lowpoly_kit_1_rooms/trap_room.tscn" id="10_47j7r"]
+[ext_resource type="PackedScene" uid="uid://b1c7nsr0vdiq" path="res://addons/SimpleDungeons/sample_dungeons/lowpoly_kit_1_rooms/treasure_room.tscn" id="11_l7lf5"]
+[ext_resource type="PackedScene" uid="uid://dvdly7xo8rxig" path="res://addons/SimpleDungeons/sample_dungeons/lowpoly_kit_1_rooms/corridor.tscn" id="12_3g8tn"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ujtpc"]
 vertices = PackedVector3Array(-41.6861, -4.17579, -6.9361, -12.1861, -4.17579, -6.9361, -12.1861, -4.17579, -7.9361, -11.1861, -4.17579, -8.1861, -11.1861, -4.17579, -41.6861, -41.6861, -4.17579, -41.6861, -10.1861, -4.17579, -8.1861, 11.5639, -4.17579, -8.6861, 11.5639, -4.17579, -10.1861, 12.5639, -4.17579, -10.4361, 12.5639, -4.17579, -41.6861, 13.8139, -4.17579, -10.1861, 13.8139, -4.17579, -8.6861, 18.3139, -4.17579, -4.9361, 20.0639, -4.17579, -4.6861, 41.5639, -4.17579, -2.6861, 41.5639, -4.17579, -41.6861, 20.0639, -4.17579, -2.6861, 18.8139, -4.17579, 9.8139, 18.8139, -4.17579, 4.8139, 17.8139, -4.17579, 4.5639, 7.3139, -4.17579, 9.8139, 17.8139, -4.17579, -4.6861, 13.5639, -4.17579, -8.1861, 11.8139, -4.17579, -8.1861, -9.9361, -4.17579, -6.4361, -4.6861, -4.17579, 13.3139, 7.0639, -4.17579, 13.3139, -5.1861, -4.17579, 13.8139, -10.4361, -4.17579, -5.9361, -11.9361, -4.17579, -5.9361, -5.1861, -4.17579, 14.5639, -41.6861, -4.17579, 14.5639, 20.0639, -4.17579, 2.5639, 41.5639, -4.17579, 2.5639, 20.0639, -4.17579, 4.5639, 21.0639, -4.17579, 9.8139, 21.3139, -4.17579, 11.0639, 41.5639, -4.17579, 11.0639, 8.5639, -1.67579, 11.0639, 20.3139, -1.67579, 11.0639, 8.0639, -1.67579, 10.8139, 7.8139, -1.67579, 14.3139, -4.1861, -1.67579, 14.3139, 8.3139, -1.67579, 14.5639, 21.0639, -4.17579, 12.0639, 19.0639, -4.17579, 41.5639, 41.5639, -4.17579, 41.5639, 19.0639, -4.17579, 12.0639, 9.3139, -4.17579, 12.0639, 9.3139, -4.17579, 15.3139, 7.0639, -4.17579, 15.5639, 7.0639, -4.17579, 41.5639, -2.9361, -4.17579, 41.5639, -2.9361, -4.17579, 15.5639, -4.9361, -4.17579, 15.5639, -41.6861, -4.17579, 41.5639)
@@ -20,8 +28,20 @@ navigation_mesh = SubResource("NavigationMesh_ujtpc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.59051, 0)
 
 [node name="Player" parent="." instance=ExtResource("2_55nbn")]
-transform = Transform3D(0.336208, 0, 0.941788, 0, 1, 0, -0.941788, 0, 0.336208, 33.5043, 0.736707, 12.5466)
+transform = Transform3D(0.179729, 0, -0.983716, 0, 1, 0, 0.983716, 0, 0.179729, 40.5667, 0.736707, 7.63512)
 
 [node name="Billy" parent="." instance=ExtResource("3_f0cvv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.976617, 1.69084, -3.14528)
 TURN_SPEED = 5.0
+
+[node name="DungeonGenerator3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.672, 0, 0)
+script = ExtResource("5_gxnpd")
+room_scenes = Array[PackedScene]([ExtResource("6_vwswn"), ExtResource("7_hxtbr"), ExtResource("8_gsi1n"), ExtResource("9_66t3f"), ExtResource("10_47j7r"), ExtResource("11_l7lf5")])
+corridor_room_scene = ExtResource("12_3g8tn")
+dungeon_size = Vector3i(10, 2, 10)
+voxel_scale = Vector3(6, 6, 6)
+max_retries = 6
+max_safe_iterations = 500
+
+[connection signal="done_generating" from="DungeonGenerator3D" to="Player" method="_on_dungeon_generator_3d_done_generating"]
