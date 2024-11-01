@@ -261,6 +261,7 @@ func get_doors() -> Array:
 		# Find the door direction by the its vector from the grid square's center point
 		var door_dir := DungeonUtils.vec3_to_direction(door_pos_pct_across - grid_center_pct_across)
 		var door_obj := Door.new(door_pos_grid, door_dir, door.name.begins_with("DOOR?"), self, door)
+		
 		room_doors.push_back(door_obj)
 	
 	_doors_cache = room_doors

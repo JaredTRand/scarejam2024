@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpphyt1doicju"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_eget8"]
+
+[node name="corridor_long" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00525904, 0, 0.00287294)
+script = ExtResource("1_eget8")
+size_in_voxels = Vector3i(2, 1, 7)
+voxel_scale = Vector3(5, 5, 5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(10, 5, 35)
+
+[node name="insides" type="CSGBox3D" parent="CSGBox3D"]
+operation = 2
+size = Vector3(9.5, 4.5, 34.5)
+
+[node name="DOOR_Large" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.35, 0, -17)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR_Large2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35, 0, -17)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.35, 0, 17)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35, 0, 17)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large5" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, 14.875)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large6" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, 10.1302)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large7" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0, 14.875)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large8" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0, 10.1302)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large9" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0, -10.125)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large10" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0, -14.8698)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large11" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -10.125)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?_Large12" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -14.8698)
+operation = 2
+size = Vector3(4.75, 4.5, 1)
+
+[node name="DOOR?3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, -0.875244, 0)
+operation = 2
+size = Vector3(1.5, 2.75049, 1)
+
+[node name="DOOR?4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, -0.875244, 1.74856e-07)
+operation = 2
+size = Vector3(1.5, 2.75049, 1)

@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://xgfp41317ddp"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_l3sbc"]
+
+[node name="room_basic" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00525904, 0, 0.00287294)
+script = ExtResource("1_l3sbc")
+voxel_scale = Vector3(5, 5, 5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(5, 5, 5)
+
+[node name="insides" type="CSGBox3D" parent="CSGBox3D"]
+operation = 2
+size = Vector3(4.5, 4.5, 4.5)
+
+[node name="DOOR" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.875244, 2)
+operation = 2
+size = Vector3(1.5, 2.75049, 1)
+
+[node name="DOOR2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.875244, -2)
+operation = 2
+size = Vector3(1.5, 2.75049, 1)
+
+[node name="DOOR3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, -0.875244, 0)
+operation = 2
+size = Vector3(1.5, 2.75049, 1)
+
+[node name="DOOR4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, -0.875244, 1.74846e-07)
+operation = 2
+size = Vector3(1.5, 2.75049, 1)

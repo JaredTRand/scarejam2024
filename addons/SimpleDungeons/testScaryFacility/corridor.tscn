@@ -1,59 +1,45 @@
-[gd_scene load_steps=5 format=3 uid="uid://tgwdxi36edlf"]
+[gd_scene load_steps=4 format=3 uid="uid://ebs73t8bec5v"]
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_eget8"]
-[ext_resource type="Texture2D" uid="uid://dqvyc0ok7chld" path="res://addons/SimpleDungeons/sample_assets/kenney-grey-checkerboard-cc0.png" id="2_8ppml"]
+[ext_resource type="Material" uid="uid://dqri1dv530y4m" path="res://addons/SimpleDungeons/testScaryFacility/hallwaybliue.tres" id="2_agg3j"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oj2cm"]
-albedo_texture = ExtResource("2_8ppml")
-uv1_triplanar = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wckd8"]
+next_pass = ExtResource("2_agg3j")
 
-[sub_resource type="GDScript" id="GDScript_ldqn2"]
-script/source = "@tool
-extends Node
-
-func remove_unused_doors():
-	for door in $\"..\".get_doors():
-		if door.get_room_leads_to() == null:
-			door.door_node.queue_free()
-
-func _on_dungeon_done_generating():
-	remove_unused_doors()
-"
-
-[node name="Corridor" type="Node3D"]
+[node name="room_basic" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00525904, 0, 0.00287294)
 script = ExtResource("1_eget8")
+voxel_scale = Vector3(5, 5, 5)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.68248e-07, 0, 0)
-material_override = SubResource("StandardMaterial3D_oj2cm")
-use_collision = true
-size = Vector3(10, 10, 10)
+size = Vector3(5, 5, 5)
+material = ExtResource("2_agg3j")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+[node name="insides" type="CSGBox3D" parent="CSGBox3D"]
 operation = 2
-size = Vector3(9.5, 9.5, 9.5)
+size = Vector3(4.5, 4.5, 4.5)
+material = SubResource("StandardMaterial3D_wckd8")
 
-[node name="DOOR?_F_CUT" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.75, -5.25)
+[node name="DOOR?" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.875244, 2)
 operation = 2
-size = Vector3(2, 4, 1)
+size = Vector3(1.5, 2.75049, 1)
+material = ExtResource("2_agg3j")
 
-[node name="DOOR?_R_CUT" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, -2.75, 0)
+[node name="DOOR?2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.875244, -2)
 operation = 2
-size = Vector3(2, 4, 1)
+size = Vector3(1.5, 2.75049, 1)
+material = ExtResource("2_agg3j")
 
-[node name="DOOR?_L_CUT" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, -2.75, 0)
+[node name="DOOR?3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, -0.875244, 0)
 operation = 2
-size = Vector3(2, 4, 1)
+size = Vector3(1.5, 2.75049, 1)
+material = ExtResource("2_agg3j")
 
-[node name="DOOR?_B_CUT" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.75, 5)
+[node name="DOOR?4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, -0.875244, 1.74846e-07)
 operation = 2
-size = Vector3(2, 4, 1)
-
-[node name="RemoveUnusedDoors" type="Node" parent="."]
-script = SubResource("GDScript_ldqn2")
-
-[connection signal="dungeon_done_generating" from="." to="RemoveUnusedDoors" method="_on_dungeon_done_generating"]
+size = Vector3(1.5, 2.75049, 1)
+material = ExtResource("2_agg3j")
